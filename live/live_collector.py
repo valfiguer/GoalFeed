@@ -106,6 +106,12 @@ class LiveMatch:
             return "bundesliga"
         elif "serie a" in league_lower:
             return "seriea"
+        elif "ligue 1" in league_lower:
+            return "ligue1"
+        elif "europa" in league_lower and "conference" not in league_lower:
+            return "europa"
+        elif "conference" in league_lower:
+            return "conference"
         else:
             return "default"
 
@@ -198,13 +204,13 @@ class LiveCollector:
         """Normalize team name for display."""
         if not name:
             return "Unknown"
-        
+
         # Common replacements
         replacements = {
             "FC Barcelona": "Barcelona",
             "Real Madrid CF": "Real Madrid",
-            "Atletico Madrid": "Atlético Madrid",
-            "Club Atletico de Madrid": "Atlético Madrid",
+            "Atletico Madrid": "Atletico Madrid",
+            "Club Atletico de Madrid": "Atletico Madrid",
             "Manchester United": "Man United",
             "Manchester City": "Man City",
             "Paris Saint Germain": "PSG",
@@ -215,8 +221,30 @@ class LiveCollector:
             "Inter Milan": "Inter",
             "Internazionale": "Inter",
             "AC Milan": "Milan",
+            # New normalizations
+            "Sevilla FC": "Sevilla",
+            "Valencia CF": "Valencia",
+            "SSC Napoli": "Napoli",
+            "AS Roma": "Roma",
+            "SS Lazio": "Lazio",
+            "Bayer 04 Leverkusen": "Leverkusen",
+            "Bayer Leverkusen": "Leverkusen",
+            "RB Leipzig": "Leipzig",
+            "SL Benfica": "Benfica",
+            "FC Porto": "Porto",
+            "Sporting CP": "Sporting",
+            "AFC Ajax": "Ajax",
+            "PSV Eindhoven": "PSV",
+            "Newcastle United": "Newcastle",
+            "Aston Villa FC": "Aston Villa",
+            "West Ham United": "West Ham",
+            "Tottenham Hotspur": "Tottenham",
+            "Olympique de Marseille": "Marseille",
+            "Olympique Lyonnais": "Lyon",
+            "AS Monaco": "Monaco",
+            "LOSC Lille": "Lille",
         }
-        
+
         return replacements.get(name, name)
     
     def _is_tracked_league(self, league_name: str, league_id: Optional[int] = None) -> bool:
@@ -224,21 +252,24 @@ class LiveCollector:
         # Check by ID first
         if league_id and league_id in self.tracked_leagues:
             return True
-        
+
         # Check by name
         league_lower = league_name.lower() if league_name else ""
         tracked_keywords = [
             "champions", "ucl", "uefa champions",
-            "laliga", "la liga", "primera division", "primera división",
-            "premier league",
-            "serie a",
-            "bundesliga"
+            "laliga", "la liga", "primera division", "primera divisi",
+            "premier league", "english premier",
+            "serie a", "serie a tim",
+            "bundesliga",
+            "ligue 1", "ligue 1 uber",
+            "europa league", "uefa europa",
+            "conference league", "europa conference",
         ]
-        
+
         for keyword in tracked_keywords:
             if keyword in league_lower:
                 return True
-        
+
         return False
     
     def fetch_live_matches_free_api(self) -> List[LiveMatch]:

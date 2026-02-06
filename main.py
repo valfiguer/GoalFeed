@@ -87,14 +87,22 @@ def signal_handler(signum, frame):
 
 
 def seed_sources_if_needed(repo, config):
-    """Seed RSS sources to database if not present."""
+    """Seed RSS sources to database if not present, or re-seed if count changed."""
     logger = logging.getLogger('goalfeed')
-    
+
     existing = repo.get_sources()
-    if existing:
-        logger.info(f"Found {len(existing)} existing sources")
+    config_count = len(config.rss_sources)
+
+    if existing and len(existing) == config_count:
+        logger.info(f"Found {len(existing)} existing sources (matches config)")
         return
-    
+
+    if existing and len(existing) != config_count:
+        logger.info(
+            f"Source count mismatch: DB={len(existing)}, config={config_count}. "
+            f"Re-seeding sources..."
+        )
+
     # Seed from config
     sources_data = [
         {
@@ -105,33 +113,30 @@ def seed_sources_if_needed(repo, config):
         }
         for s in config.rss_sources
     ]
-    
+
     repo.seed_sources(sources_data)
     logger.info(f"Seeded {len(sources_data)} RSS sources")
 
 
-def get_fallback_image(sport: str) -> bytes:
-    """Get fallback image for a sport, creating placeholder if needed."""
+def get_fallback_image(sport: str = "football_eu") -> bytes:
+    """Get fallback image for football, creating placeholder if needed."""
     config = get_config()
-    fallback_path = config.fallback_images.get(sport, config.fallback_images['default'])
-    
+    fallback_path = config.fallback_images.get("football_eu", config.fallback_images["default"])
+
     # Build absolute path
     if not os.path.isabs(fallback_path):
         fallback_path = os.path.join(PROJECT_ROOT, fallback_path)
-    
+
     # Try to load fallback
     if os.path.exists(fallback_path):
         with open(fallback_path, 'rb') as f:
             return f.read()
-    
+
     # Create placeholder if fallback doesn't exist
     logging.getLogger('goalfeed').warning(
         f"Fallback image not found: {fallback_path}, using placeholder"
     )
-    
-    from config import SPORT_DISPLAY
-    sport_name = SPORT_DISPLAY.get(sport, {}).get('name', 'Deportes')
-    return create_placeholder_image(text=f"GoalFeed | {sport_name}")
+    return create_placeholder_image(text="GoalFeed | Futbol")
 
 
 def process_single_article(item, repo, config, logger) -> bool:
@@ -433,7 +438,8 @@ def main():
     logger = setup_logging()
     
     logger.info("=" * 60)
-    logger.info("🚀 GoalFeed Bot Starting...")
+    logger.info("⚽ GoalFeed - Football News & Rumors")
+    logger.info("🚀 Starting...")
     logger.info("=" * 60)
     
     # Load config

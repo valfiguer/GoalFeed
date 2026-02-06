@@ -230,16 +230,19 @@ class LivePublisher:
     def _get_league_hashtags(self, match: LiveMatch) -> str:
         """Get hashtags for a league."""
         league_key = match.league_key if hasattr(match, 'league_key') else match.get_league_key()
-        
+
         hashtag_map = {
             "ucl": "#UCL #ChampionsLeague",
-            "laliga": "#LaLiga #FútbolEspañol",
-            "premier": "#PremierLeague",
+            "laliga": "#LaLiga #FutbolEspanol",
+            "premier": "#PremierLeague #EPL",
             "bundesliga": "#Bundesliga",
-            "seriea": "#SerieA",
+            "seriea": "#SerieA #CalcioItaliano",
+            "ligue1": "#Ligue1 #FutbolFrances",
+            "europa": "#EuropaLeague #UEL",
+            "conference": "#ConferenceLeague #UECL",
         }
-        
-        base_tags = hashtag_map.get(league_key, "#Fútbol")
+
+        base_tags = hashtag_map.get(league_key, "#Futbol")
         return f"{base_tags} #GoalFeed"
     
     def get_live_image(self, match: LiveMatch) -> Optional[bytes]:

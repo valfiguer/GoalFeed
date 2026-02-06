@@ -74,25 +74,26 @@ class Copywriter:
     def generate_summary(self, item: NormalizedItem, max_lines: int = 3) -> str:
         """
         Generate a brief summary (2-3 lines) in italic.
-        
-        Args:
-            item: NormalizedItem to summarize
-            max_lines: Maximum lines
-            
-        Returns:
-            Summary text with italic formatting
+        For rumor category with RUMOR status, use conditional language.
         """
         # Use summary if available, otherwise use title
         if item.summary:
             summary = clean_html(item.summary)
         else:
             summary = clean_html(item.title)
-        
+
+        # For rumor + RUMOR status, prepend conditional language
+        if item.category == "rumor" and item.status == "RUMOR":
+            conditional = self.get_conditional_language("RUMOR")
+            prefix = conditional["prefixes"][0] if conditional["prefixes"] else ""
+            if prefix and not summary.lower().startswith(prefix.lower().rstrip(":")):
+                summary = f"{prefix} {summary}"
+
         # Truncate to reasonable length
         max_length = 200 * max_lines
         summary = truncate_text(summary, max_length, "...")
         summary = escape_html(summary)
-        
+
         return f"<i>{summary}</i>"
     
     def generate_status_line(self, item: NormalizedItem) -> str:

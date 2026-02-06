@@ -255,7 +255,7 @@ def collect_by_sport(sport: str) -> List[RawItem]:
     Collect items from sources of a specific sport.
     
     Args:
-        sport: Sport type (football_eu, nba, tennis)
+        sport: Sport type (football_eu)
         
     Returns:
         List of RawItem objects
