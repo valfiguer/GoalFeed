@@ -67,16 +67,16 @@ BIG_ENTITIES = {
 }
 
 
-# Category score bonuses
+# Category score bonuses (transfer/rumor focused)
 CATEGORY_BONUSES = {
-    "breaking": 18,
-    "rumor": 15,
-    "transfer": 12,
-    "injury": 10,
-    "controversy": 8,
-    "match_result": 5,
-    "stats": 3,
-    "schedule": 0,
+    "breaking": 20,
+    "rumor": 18,
+    "transfer": 16,
+    "injury": 5,
+    "match_result": 3,
+    "controversy": 3,
+    "schedule": 1,
+    "stats": 1,
     "default": 0
 }
 

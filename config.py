@@ -115,9 +115,14 @@ class Config:
     # Polling
     poll_interval_seconds: int = 300  # 5 minutes
 
+    # Scheduled publication times (Europe/Madrid)
+    scheduled_post_times: List[str] = field(default_factory=lambda: [
+        "12:00", "15:00", "18:00", "21:00"
+    ])
+
     # Rate Limiting
-    max_posts_per_day: int = 36
-    max_posts_per_hour: int = 5
+    max_posts_per_day: int = 4
+    max_posts_per_hour: int = 1
 
     # Active Window (Europe/Madrid)
     active_window_start: str = "08:00"
@@ -428,7 +433,14 @@ CATEGORY_KEYWORDS = {
     "match_result": [
         "resultado", "result", "gano", "won", "perdio", "lost", "empate",
         "draw", "victoria", "victory", "derrota", "defeat", "goles", "goals",
-        "marcador", "score", "final", "partido", "match", "game", "encuentro"
+        "marcador", "score", "final", "partido", "match", "game", "encuentro",
+        "cronica", "resumen", "highlights", "remontada", "goleada",
+        "primera division", "primera divisi", "jornada laliga",
+        "derbi", "clasico", "el clasico",
+        "penaltis", "tanda de penaltis", "prorroga", "tiempo extra",
+        "hat trick", "hat-trick", "triplete", "doblete",
+        "porteria a cero", "clean sheet", "autogol",
+        "minuto", "descuento", "tiempo anadido", "tiempo de descuento"
     ],
     "controversy": [
         "polemica", "controversy", "escandalo", "scandal", "sancion",
@@ -444,7 +456,10 @@ CATEGORY_KEYWORDS = {
     "schedule": [
         "calendario", "schedule", "fixture", "horario", "hora", "time",
         "fecha", "date", "jornada", "matchday", "convocatoria", "squad",
-        "alineacion", "lineup", "once", "starting eleven", "previa", "preview"
+        "alineacion", "lineup", "once", "starting eleven", "previa", "preview",
+        "donde ver", "television", "transmision", "arbitro designado",
+        "analisis previo", "cara a cara", "pronostico", "apuestas",
+        "proxima jornada", "proxima fecha", "suspendido", "aplazado"
     ]
 }
 
@@ -490,13 +505,15 @@ HEADLINE_TEMPLATES = {
         "❌ NO ESTARA: {headline}"
     ],
     "match_result": [
-        "⚽ RESULTADO: {headline}",
-        "🏆 VICTORIA: {headline}",
+        "⚽ CRONICA: {headline}",
+        "🏆 RESULTADO: {headline}",
         "📊 MARCADOR FINAL: {headline}",
         "⚽ PARTIDAZO: {headline}",
-        "🏆 TRIUNFO: {headline}",
-        "📊 FINAL: {headline}",
-        "⚽ GOLEADA: {headline}"
+        "🏆 ASI FUE: {headline}",
+        "📊 FINAL DEL PARTIDO: {headline}",
+        "⚽ RESUMEN: {headline}",
+        "🏆 VICTORIA: {headline}",
+        "📰 LA CRONICA: {headline}"
     ],
     "controversy": [
         "😱 POLEMICA: {headline}",
@@ -516,12 +533,14 @@ HEADLINE_TEMPLATES = {
         "🏅 CIFRA: {headline}"
     ],
     "schedule": [
-        "📅 AGENDA: {headline}",
-        "⏰ PROXIMAMENTE: {headline}",
+        "📅 PREVIA: {headline}",
+        "⏰ HOY SE JUEGA: {headline}",
         "📋 CONVOCATORIA: {headline}",
-        "📅 HORARIO: {headline}",
-        "⏰ SE VIENE: {headline}",
-        "📋 ALINEACION: {headline}"
+        "📅 JORNADA: {headline}",
+        "⏰ PROXIMO PARTIDO: {headline}",
+        "📋 ALINEACION: {headline}",
+        "📅 AGENDA DEL DIA: {headline}",
+        "⏰ A QUE HORA JUEGA: {headline}"
     ],
     "default": [
         "📰 {headline}",
