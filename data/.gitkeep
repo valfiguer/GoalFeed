@@ -1,0 +1,3 @@
+# Data directory
+# SQLite database will be created here
+*.db

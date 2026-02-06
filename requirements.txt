@@ -1,0 +1,38 @@
+# GoalFeed - Telegram Sports News Bot
+# Python 3.11+
+
+# Telegram Bot
+aiogram>=3.4.1,<4.0.0
+
+# RSS Parsing
+feedparser>=6.0.10,<7.0.0
+
+# HTTP Requests
+requests>=2.31.0,<3.0.0
+
+# HTML Parsing
+beautifulsoup4>=4.12.3,<5.0.0
+lxml>=5.1.0,<6.0.0
+
+# Image Processing
+Pillow>=10.2.0,<11.0.0
+
+# Date/Time
+python-dateutil>=2.8.2,<3.0.0
+pytz>=2024.1
+
+# Data Validation
+pydantic>=2.6.0,<3.0.0
+pydantic-settings>=2.1.0,<3.0.0
+
+# Fuzzy String Matching
+rapidfuzz>=3.6.1,<4.0.0
+
+# Environment Variables
+python-dotenv>=1.0.0,<2.0.0
+
+# Async HTTP (for aiogram)
+aiohttp>=3.9.3,<4.0.0
+
+# Note: For live match tracking, you'll need a Football API key
+# Recommended: API-Football on RapidAPI (https://rapidapi.com/api-sports/api/api-football/)
