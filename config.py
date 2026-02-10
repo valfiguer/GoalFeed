@@ -272,8 +272,8 @@ class Config:
                 weight=18
             ),
             RSSSource(
-                name="Football-Espana",
-                url="https://www.football-espana.net/feed",
+                name="TodoMercadoWeb ES",
+                url="https://www.todomercadoweb.es/rss/",
                 sport_hint="football_eu",
                 weight=17
             ),
